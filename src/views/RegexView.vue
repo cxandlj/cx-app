@@ -9,7 +9,7 @@
                 <div class="card-header">
                     <span>原始内容</span>
                     <el-button type="warning" @click="clearText">清空</el-button>
-                    <el-button type="success" @click="matchText">导入</el-button>
+                    <!-- <el-button type="success" @click="matchText">导入</el-button> -->
                 </div>
                 </template>
                 <el-input

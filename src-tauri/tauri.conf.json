@@ -11,6 +11,10 @@
     "version": "0.1.0"
   },
   "tauri": {
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
     "allowlist": {
       "all": true
     },
@@ -59,7 +63,8 @@
         "height": 650,
         "resizable": false,
         "title": "cx-app",
-        "width": 1100
+        "width": 1100,
+        "center": true
       }
     ]
   }
