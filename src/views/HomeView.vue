@@ -22,6 +22,11 @@ export default {
           imgUrl: regexPng,
           text: '正则工具',
           url:'regex'
+        },
+        {
+          imgUrl: regexPng,
+          text: '代码格式化',
+          url:'codeFmt'
         }
       ]
     }

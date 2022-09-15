@@ -1,6 +1,6 @@
 {
   "name": "cx-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,11 +10,24 @@
     "tauri:dev": "vue-cli-service tauri:dev"
   },
   "dependencies": {
+    "@codemirror/lang-html": "^6.1.1",
+    "@codemirror/lang-javascript": "^6.0.2",
+    "@codemirror/lang-json": "^6.0.0",
+    "@codemirror/lang-rust": "^6.0.0",
+    "@codemirror/lang-sql": "^6.3.0",
+    "@codemirror/lang-xml": "^6.0.0",
+    "@codemirror/state": "^6.0.0",
+    "@codemirror/theme-one-dark": "^6.0.0",
     "@element-plus/icons-vue": "^2.0.6",
     "@tauri-apps/api": "^1.0.1",
+    "codemirror": "^6.0.1",
     "core-js": "^3.8.3",
     "element-plus": "^2.2.6",
+    "monaco-editor": "^0.34.0",
+    "monaco-editor-webpack-plugin": "^7.0.1",
+    "sql-formatter": "^10.6.0",
     "vue": "^3.2.13",
+    "vue-codemirror": "^6.1.1",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },

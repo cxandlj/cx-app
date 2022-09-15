@@ -11,6 +11,11 @@ const routes = [
     path: '/regex',
     name: 'regex',
     component: () => import('../views/RegexView.vue')
+  },
+  {
+    path: '/codeFmt',
+    name: 'codeFmt',
+    component: () => import('../views/CodeFmtView.vue')
   }
 ]
 
