@@ -12,6 +12,7 @@
 <script>
 // @ is an alias to /src
 import regexPng from '@/assets/regex.png'
+import textFormat from '@/assets/text-format.png'
 export default {
   name: 'HomeView',
   components: {},
@@ -24,7 +25,7 @@ export default {
           url:'regex'
         },
         {
-          imgUrl: regexPng,
+          imgUrl: textFormat,
           text: '代码格式化',
           url:'codeFmt'
         }

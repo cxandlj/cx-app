@@ -36,10 +36,10 @@
     <el-col :span="24"> 
         <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="普通模式" name="common">
-                <div id="container" style="width:100%;height:400px;text-align:left;float: right;"></div>
+                <div id="container" style="width:100%;height:450px;text-align:left;float: right;"></div>
             </el-tab-pane>
             <el-tab-pane label="比较模式" name="diff">                
-                <div id="containerDiff" style="width:100%;height:400px;text-align:left;float: left;"></div>
+                <div id="containerDiff" style="width:100%;height:450px;text-align:left;float: left;"></div>
             </el-tab-pane>
         </el-tabs>
     </el-col>
@@ -108,32 +108,7 @@ export default {
                 
         },
         languageChange() {
-            debugger;
-            console.log('languange',this.language)
-            if (!editor) {
-                document.getElementById('container').innerHTML = "";
-                editor = monaco.editor.create(document.getElementById('container'), {
-                    value: this.language,
-                    language: this.language
-                });
-            }
-
-            // this.editor.updateOptions({
-            //     value:this.language,
-            //     language: this.language
-            // });
-
-            // document.getElementById('container').innerHTML = "";
-            // this.editor = monaco.editor.create(document.getElementById('container'), {
-            //     value: this.language,
-            //     language: this.language
-            // });
-
-            // console.log('editor', this.editor.setModel);
-
-            // this.editor.setModel(null);
             var newModel = monaco.editor.createModel('', this.language);
-            // console.log('model', newModel);
             editor.setModel(newModel);
         },
         isDiffChange(val) {
@@ -155,8 +130,9 @@ export default {
                     if (!editor) {
                         document.getElementById('container').innerHTML = "";
                         editor = monaco.editor.create(document.getElementById('container'), {
-                            value: this.language,
-                            language: this.language
+                            value: '',
+                            language: this.language,
+                            theme:'vs-dark'
                         });
                     }
                     break;
@@ -166,10 +142,11 @@ export default {
                         document.getElementById('containerDiff').innerHTML = "";
                         diffEditor = monaco.editor.createDiffEditor(document.getElementById('containerDiff'), {
                             // enableSplitViewResizing: false
+                            theme:'vs-dark'
                         });
         
-                        var lhsModel = monaco.editor.createModel('original', 'text/plain');
-                        var rhsModel = monaco.editor.createModel('modified', 'text/plain');
+                        var lhsModel = monaco.editor.createModel('original', this.language);
+                        var rhsModel = monaco.editor.createModel('modified', this.language);
                         
                         diffEditor.setModel({
                             original: lhsModel,
