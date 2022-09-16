@@ -50,7 +50,11 @@
 <script>
 import * as monaco from 'monaco-editor';
 import { format as sqlFormat } from 'sql-formatter';
-let editor,diffEditor;
+import prettier from 'prettier/standalone';
+import parserBabel from 'prettier/parser-babel';
+import parserHtml from 'prettier/parser-html';
+let editor, diffEditor;
+
 export default {
     data() {
         return {           
@@ -70,12 +74,16 @@ export default {
                     value:'javascript'
                 },
                 {
-                    label:'rust',
-                    value:'rust'
-                },
-                {
                     label:'html',
                     value:'html'
+                },
+                {
+                    label:'angular',
+                    value:'angular'
+                },
+                {
+                    label:'rust',
+                    value:'rust'
                 },
                 {
                     label:'csharp',
@@ -100,6 +108,19 @@ export default {
                 case 'sql':
                     editor.setValue(sqlFormat(editor.getValue()));
                     break;     
+                case 'javascript':
+                    editor.setValue(prettier.format(editor.getValue(),
+                        {  parser: "babel-flow", plugins: [parserBabel] }));
+                    break;
+                case 'json':
+                    editor.setValue(prettier.format(editor.getValue(),
+                        { parser: "json-stringify" , plugins: [parserBabel] }));
+                    break;
+                case 'html':
+                case 'angular':
+                    editor.setValue(prettier.format(editor.getValue(),
+                        { parser: "html" , plugins: [parserHtml] }));
+                    break;
                 default:
                     editor.trigger("anyString", 'editor.action.formatDocument');
                     editor.setValue(editor.getValue());
