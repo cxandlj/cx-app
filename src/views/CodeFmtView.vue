@@ -136,13 +136,15 @@ export default {
                         });
                     }
                     break;
-                 case 'diff':
+            case 'diff':
                     debugger
                     if (!diffEditor) {
                         document.getElementById('containerDiff').innerHTML = "";
                         diffEditor = monaco.editor.createDiffEditor(document.getElementById('containerDiff'), {
                             // enableSplitViewResizing: false
-                            theme:'vs-dark'
+                            theme: 'vs-dark',
+                            readOnly: false,
+                            originalEditable:true
                         });
         
                         var lhsModel = monaco.editor.createModel('original', this.language);
