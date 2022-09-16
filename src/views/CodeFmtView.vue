@@ -21,17 +21,16 @@
         </el-select>
     </el-col>
 
-    <el-col :span="2">
-        <el-button type="primary" @click="format()">格式化</el-button>
+    <el-col :span="12" align="left">
+        <el-button type="primary" @click="format()" style="margin-left:20px;">格式化</el-button>
+        <el-button type="primary" @click="clear(1)">{{isDiff?'清空左侧':'清空'}}</el-button>
+        <el-button type="primary" v-show="isDiff" @click="clear(2)">清空右侧</el-button>
+        <el-button type="primary" @click="copy(1)">{{isDiff?'复制左侧':'复制'}}</el-button>
+        <el-button type="primary" v-show="isDiff" @click="copy(2)">复制右侧</el-button>
+
     </el-col>
-    <el-col :span="8">
-        <!-- <el-switch
-            v-model="isDiff"
-            active-text="比较模式"
-            inactive-text="普通模式"
-            @change="isDiffChange"
-        /> -->
-        <el-button v-show="activeName=='diff'" style="margin-left:10px;" type="primary" @click="compare">比较</el-button>
+    <el-col :span="6">
+        <el-button v-show="false" style="margin-left:10px;" type="primary" @click="compare">比较</el-button>
     </el-col>
     <el-col :span="24"> 
         <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -53,6 +52,8 @@ import { format as sqlFormat } from 'sql-formatter';
 import prettier from 'prettier/standalone';
 import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
+import { invoke } from '@tauri-apps/api/tauri'
+import { ElNotification } from 'element-plus'
 let editor, diffEditor;
 
 export default {
@@ -132,10 +133,46 @@ export default {
             var newModel = monaco.editor.createModel('', this.language);
             editor.setModel(newModel);
         },
-        isDiffChange(val) {
-            if (val) {
-                
+        
+        clear(type) {
+            if (this.isDiff) {
+                if (type == 1) {
+                    diffEditor.getModel().original.setValue('');
+                }
+                else {
+                    diffEditor.getModel().modified.setValue('');
+                }
             }
+            else {
+                editor.setValue('');
+            }
+        },
+        copy(type) {
+
+            var txt = '';
+            if (type == 1) {
+                if (this.isDiff) {
+                    txt = diffEditor.getModel().original.getValue();
+                }
+                else {
+                    txt = editor.getValue();
+                }
+            }
+            else {
+                txt = diffEditor.getModel().modified.getValue();
+            }
+
+            invoke('copy_text', {
+                txt: txt,
+                })
+                .then((res) =>
+                     ElNotification({
+                        message: '复制成功',
+                         type: 'success',
+                        duration:2000
+                    })
+                )
+                .catch((e) => console.error(e))
         },
         compare() {
             
@@ -179,6 +216,11 @@ export default {
                     break;
             }
 
+        }
+    },
+    computed: {
+        isDiff() {
+            return this.activeName == 'diff';
         }
     }
 }
