@@ -21,6 +21,8 @@ tauri = { version = "1.0.0-rc.11", features = ["api-all", "system-tray"] }
 regex = "1.5.6"
 anyhow = "1.0.58"
 arboard = "2.1.1"
+enigo = "0.0.14"
+tokio = { version = "1.21.2", features = ["full"] }
 
 [features]
 # by default Tauri runs in production mode

@@ -67,10 +67,6 @@ export default {
                     value:'json'
                 },
                 {
-                    label:'sql',
-                    value:'sql'
-                },
-                {
                     label:'javascript',
                     value:'javascript'
                 },
@@ -79,17 +75,21 @@ export default {
                     value:'html'
                 },
                 {
-                    label:'angular',
-                    value:'angular'
+                    label:'sql',
+                    value:'sql'
                 },
-                {
-                    label:'rust',
-                    value:'rust'
-                },
-                {
-                    label:'csharp',
-                    value:'csharp'
-                }
+                // {
+                //     label:'angular',
+                //     value:'angular'
+                // },
+                // {
+                //     label:'rust',
+                //     value:'rust'
+                // },
+                // {
+                //     label:'csharp',
+                //     value:'csharp'
+                // }
             ],
             // editor:null,
             activeName:'common',
