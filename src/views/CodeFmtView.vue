@@ -52,7 +52,7 @@ import { format as sqlFormat } from 'sql-formatter';
 import prettier from 'prettier/standalone';
 import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { ElNotification } from 'element-plus'
 let editor, diffEditor;
 

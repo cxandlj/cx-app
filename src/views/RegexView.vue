@@ -124,7 +124,7 @@
 
 <script>
 import { ArrowLeftBold } from '@element-plus/icons-vue'
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { ElNotification } from 'element-plus'
 export default {
     data() {
