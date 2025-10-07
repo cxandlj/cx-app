@@ -1,7 +1,7 @@
 # cx-app
 
 Personal Tool
-Use Tauri1.0 and Vue3.0,Personal learning Project. 
+Use Tauri2.0 and Vue3.0,Personal learning Project. 
 
 ## Project setup
 
@@ -12,16 +12,15 @@ Install yarn
 Install tauri-cli
 
 ```
-yarn install
+npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn tauri:serve
+cargo tauri dev
 ```
 
 ### Compiles and minifies for production
 ```
-yarn tauri:build
+cargo tauri build
 ```
-
