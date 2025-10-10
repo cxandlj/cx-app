@@ -36,13 +36,11 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: 20
-            - name: Install PNPM
-              run: npm i -g pnpm
             - name: Install frontend dependencies
               # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
-              run: npm install # Change this to npm, yarn or pnpm.
-            - name: Install sveltejs
-              run: npm install @sveltejs/adapter-static --save-dev 
+              run: |
+                  npm cache clean --force 
+                  npm install # Change this to npm, yarn or pnpm.
  
             - name: Build the app
               uses: tauri-apps/tauri-action@v0
