@@ -39,6 +39,8 @@ jobs:
             - name: Install frontend dependencies
               # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
               run: |
+                  rm -rf node_modules
+                  rm -f package-lock.json
                   npm cache clean --force 
                   npm install # Change this to npm, yarn or pnpm.
  
