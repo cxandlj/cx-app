@@ -1,82 +1,98 @@
 <template>
-    <el-row align="middle">
-        <!-- <el-col :span="24" style="text-align:left;padding: 5px 20px ;">
+    <div style="height: 100%; display: flex; flex-direction: column">
+        <el-row align="middle">
+            <!-- <el-col :span="24" style="text-align:left;padding: 5px 20px ;">
          <el-button type="primary" @click="goHome()">返回主界面</el-button>
     </el-col> -->
-        <el-col :span="2">
-            <p style="margin-left: 10px">语言</p>
-        </el-col>
-        <el-col :span="4">
-            <el-select
-                v-model="language"
-                placeholder="请选择"
-                @change="languageChange"
-            >
-                <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                />
-            </el-select>
-        </el-col>
+            <el-col :span="2">
+                <p style="margin-left: 10px">语言</p>
+            </el-col>
+            <el-col :span="4">
+                <el-select
+                    v-model="language"
+                    placeholder="请选择"
+                    @change="languageChange"
+                >
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    />
+                </el-select>
+            </el-col>
 
-        <el-col :span="12" align="left">
-            <el-button
-                type="primary"
-                @click="format()"
-                style="margin-left: 20px"
-                >格式化</el-button
-            >
-            <el-button type="primary" @click="clear(1)">{{
-                isDiff ? '清空左侧' : '清空'
-            }}</el-button>
-            <el-button type="primary" v-show="isDiff" @click="clear(2)"
-                >清空右侧</el-button
-            >
-            <el-button type="primary" @click="copy(1)">{{
-                isDiff ? '复制左侧' : '复制'
-            }}</el-button>
-            <el-button type="primary" v-show="isDiff" @click="copy(2)"
-                >复制右侧</el-button
-            >
-        </el-col>
-        <el-col :span="6">
-            <el-button
-                v-show="false"
-                style="margin-left: 10px"
-                type="primary"
-                @click="compare"
-                >比较</el-button
-            >
-        </el-col>
-        <el-col :span="24">
-            <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="普通模式" name="common">
-                    <div
-                        id="container"
-                        style="
-                            width: 100%;
-                            height: 450px;
-                            text-align: left;
-                            float: right;
-                        "
-                    ></div>
-                </el-tab-pane>
-                <el-tab-pane label="比较模式" name="diff">
-                    <div
-                        id="containerDiff"
-                        style="
-                            width: 100%;
-                            height: 450px;
-                            text-align: left;
-                            float: left;
-                        "
-                    ></div>
-                </el-tab-pane>
-            </el-tabs>
-        </el-col>
-    </el-row>
+            <el-col :span="12" align="left">
+                <el-button
+                    type="primary"
+                    @click="format()"
+                    style="margin-left: 20px"
+                    >格式化</el-button
+                >
+                <el-button type="primary" @click="clear(1)">{{
+                    isDiff ? '清空左侧' : '清空'
+                }}</el-button>
+                <el-button type="primary" v-show="isDiff" @click="clear(2)"
+                    >清空右侧</el-button
+                >
+                <el-button type="primary" @click="copy(1)">{{
+                    isDiff ? '复制左侧' : '复制'
+                }}</el-button>
+                <el-button type="primary" v-show="isDiff" @click="copy(2)"
+                    >复制右侧</el-button
+                >
+            </el-col>
+            <el-col :span="6">
+                <el-button
+                    v-show="false"
+                    style="margin-left: 10px"
+                    type="primary"
+                    @click="compare"
+                    >比较</el-button
+                >
+            </el-col>
+        </el-row>
+        <el-row style="flex: 1">
+            <el-col :span="24">
+                <el-tabs
+                    v-model="activeName"
+                    @tab-click="handleClick"
+                    style="height: 100%"
+                >
+                    <el-tab-pane
+                        label="普通模式"
+                        name="common"
+                        style="height: 100%; padding: 10px"
+                    >
+                        <div
+                            id="container"
+                            style="
+                                width: 100%;
+                                height: 800px;
+                                text-align: left;
+                                float: left;
+                            "
+                        ></div>
+                    </el-tab-pane>
+                    <el-tab-pane
+                        label="比较模式"
+                        name="diff"
+                        style="height: 100%"
+                    >
+                        <div
+                            id="containerDiff"
+                            style="
+                                width: 100%;
+                                height: 800px;
+                                text-align: left;
+                                float: left;
+                            "
+                        ></div>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script>
@@ -130,7 +146,9 @@ export default {
     },
 
     mounted() {
-        this.initEditor('common')
+        this.$nextTick(() => {
+            this.initEditor('common')
+        })
     },
     beforeUnmount() {
         if (editor) {

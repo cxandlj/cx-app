@@ -229,7 +229,7 @@ export default {
     height: 100%;
 }
 
-.box-card :deep(.el-textarea__inner) {
+.box-card:deep(.el-textarea__inner) {
     height: 100% !important;
     resize: none; /* 可选：禁止用户手动调整大小 */
 }

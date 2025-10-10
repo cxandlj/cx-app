@@ -1,11 +1,14 @@
 mod regex_tool;
-use arboard::Clipboard;
+mod update_tool;
+use std::sync::Mutex;
 use tauri::{
-    menu::{Menu, MenuBuilder, MenuItem},
-    tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
+    menu::{Menu, MenuItem},
+    tray::TrayIconBuilder,
     Manager, WindowEvent,
 };
 use tauri_plugin_clipboard_manager::ClipboardExt;
+use tauri_plugin_dialog::DialogExt;
+use tauri_plugin_updater::UpdaterExt;
 
 #[tauri::command]
 fn match_text(input: &str, regex_str: &str, options: Vec<&str>) -> Result<String, String> {
@@ -43,10 +46,50 @@ fn copy_text(txt: String, app: tauri::AppHandle) -> Result<String, String> {
     }
 }
 
+async fn update(app: tauri::AppHandle) -> tauri_plugin_updater::Result<()> {
+    if let Some(update) = app.updater()?.check().await? {
+        let answer = app
+            .dialog()
+            .message("存在新版本，是否更新？")
+            .title("更新提示")
+            .buttons(tauri_plugin_dialog::MessageDialogButtons::OkCancel)
+            .blocking_show();
+
+        if !answer {
+            return Ok(());
+        }
+        let mut downloaded = 0;
+
+        // alternatively we could also call update.download() and update.install() separately
+        update
+            .download_and_install(
+                |chunk_length, content_length| {
+                    downloaded += chunk_length;
+                    println!("downloaded {downloaded} from {content_length:?}");
+                },
+                || {
+                    println!("download finished");
+                },
+            )
+            .await?;
+
+        println!("update installed");
+        app.restart();
+    }
+
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
+            // let handle = app.handle().clone();
+            // tauri::async_runtime::spawn(async move {
+            //     update(handle).await.unwrap();
+            // });
+
+            app.manage(update_tool::PendingUpdate(Mutex::new(None)));
             // let menu = MenuBuilder::new(app)
             //     .text("open", "Open")
             //     .text("close", "Close")
@@ -98,10 +141,14 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             match_text,
             replace_text,
-            copy_text
+            copy_text,
+            update_tool::fetch_update,
+            update_tool::install_update
         ])
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_clipboard_manager::init())
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
