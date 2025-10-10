@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "cx-app",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "identifier": "com.cx.cx-app",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -36,9 +36,9 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "xxxxx",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEVERkY4OUFBNDkzMkUwOUQKUldTZDRESkpxb24vN2JpYkEwVzVubHJSWElQNTMyeWVjQThqcldNc0Z4S2h1c0piMU1VQlgrRVoK",
       "endpoints": [
-        "https://xxx/latest.json"
+        "https://www.auwind.top:3900/cx-app/latest.json"
       ]
     }
   }
