@@ -46,7 +46,7 @@ jobs:
               if: matrix.platform  == 'windows-latest'
               shell: pwsh  # 指定使用 PowerShell Core
               run: Remove-Item -Recurse -Force node_modules
-                  emove-Item -Recurse -Force package-lock.json
+                  Remove-Item -Recurse -Force package-lock.json
             - name: Install frontend dependencies
               # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
               run: |
