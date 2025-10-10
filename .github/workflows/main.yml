@@ -36,11 +36,20 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: 20
-            - name: Install frontend dependencies
-              # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
+            - name: Cleanup files (Linux/macOS)
+              if: matrix.platform == 'macos-latest' || runner.os == 'ubuntu-20.04'
               run: |
                   rm -rf node_modules
                   rm -f package-lock.json
+        
+            - name: Cleanup files (Windows)
+              if: matrix.platform  == 'windows-latest'
+              shell: pwsh  # 指定使用 PowerShell Core
+              run: Remove-Item -Recurse -Force node_modules
+                  emove-Item -Recurse -Force package-lock.json
+            - name: Install frontend dependencies
+              # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
+              run: |
                   npm cache clean --force 
                   npm install # Change this to npm, yarn or pnpm.
  
