@@ -63,6 +63,7 @@ pub async fn fetch_update(
 
 #[tauri::command]
 pub async fn install_update(
+    app: AppHandle,
     pending_update: State<'_, PendingUpdate>,
     on_event: Channel<DownloadEvent>,
 ) -> Result<()> {
